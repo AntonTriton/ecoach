@@ -1,0 +1,46 @@
+<div class="part-head">
+    <!--<h2>{{ partHead.id  }}. {{ partHead.title }}</h2>
+    <p>{{ partHead.description }}</p>-->
+
+    <!--<div class="nav">
+        <button type="button" class="btn btn-success pull-right" ng-click="stepForward()">Вперед</button>
+        <button type="button" class="btn btn-success btn-back" ng-click="stepBack()">Назад</button>
+    </div>-->
+</div>
+
+<div class="coach-session row">
+    <div class="col-md-9">
+        <div class="part-head-title">
+            <h3>
+                {{step.title}}
+                <!--{{ partHead.id +". "+ partHead.title }}-->
+            </h3>
+            <!--<span>(вопрос {{ stepNumber }} из {{ stepsSummary }})</span>-->
+        </div>
+        <div class="question well">
+            {{ step.question }}
+        </div>
+        <div class="comeback alert alert-success" *ngIf="step.comepack">
+            {{ step.comeback }}
+        </div>
+
+        <div class="answer">
+            <textarea class="form-control" name="" id="answer-text" cols="30" rows="10"></textarea>
+        </div>
+
+        <div class="nav">
+            <button type="button" class="btn btn-success pull-right" (click)="stepForward()">Вперед</button>
+            <button type="button" class="btn btn-success btn-back" (click)="stepBack()">Назад</button>
+            <!--<button type="button" class="btn btn-success btn-back" ng-click="changeAnswer()">Изменить ответ</button>-->
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="comment alert alert-warning">
+            {{ step.comment }}
+        </div>
+        <div>
+            Предыдущие шаги
+        </div>
+    </div>
+</div>
+
