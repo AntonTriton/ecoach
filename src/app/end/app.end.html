@@ -1,0 +1,27 @@
+
+
+<div class="coach-session row">
+    <div class="col-md-12">
+      <div *ngFor="let step of steps">
+
+        <div class="part-head-title">
+            <h3>
+                {{step.title}}
+                <!--{{ partHead.id +". "+ partHead.title }}-->
+            </h3>
+            <!--<span>(вопрос {{ stepNumber }} из {{ stepsSummary }})</span>-->
+        </div>
+        <div class="question well">
+            {{ step.question }}
+        </div>
+
+        <div class="answer">
+          {{step.answer}}
+            <!-- <textarea class="form-control" name="" id="answer-text" cols="30" rows="10"></textarea> -->
+        </div>
+
+
+      </div>
+
+    </div>
+</div>

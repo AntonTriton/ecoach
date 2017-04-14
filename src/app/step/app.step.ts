@@ -41,6 +41,7 @@ export class AppStep {
             })
             .subscribe((data) => {
                 this.step = data;
+                this.stepsLength = this.dataService.getStepsLength()
                 console.log('getData', this.step);//
             },
             error =>  this.errorMessage = <any>error);
@@ -63,10 +64,13 @@ export class AppStep {
 
     stepForward(){
         console.log('stepForward')
-        if(this.currentStepIndex !== this.dataService.getStepsLength()) {
+        if(this.currentStepIndex !== this.stepsLength-1) {
             this.currentStepIndex++
             this.router.navigate(['/step', this.currentStepIndex]);
             //this.step = this.data[this.currentStepIndex];
+        }else{
+          // show end page
+          this.router.navigate(['end']);
         }
     }
 

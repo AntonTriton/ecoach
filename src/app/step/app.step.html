@@ -29,7 +29,10 @@
         </div>
 
         <div class="nav">
-            <button type="button" class="btn btn-success pull-right" (click)="stepForward()">Вперед</button>
+            <button type="button" class="btn btn-success pull-right" (click)="stepForward()">
+              <span *ngIf="currentStepIndex !== stepsLength-1">Вперед</span>
+              <span *ngIf="currentStepIndex === stepsLength-1">Закончить</span>
+            </button>
             <button type="button" class="btn btn-success btn-back" (click)="stepBack()">Назад</button>
             <!--<button type="button" class="btn btn-success btn-back" ng-click="changeAnswer()">Изменить ответ</button>-->
         </div>
@@ -43,4 +46,3 @@
         </div>
     </div>
 </div>
-
