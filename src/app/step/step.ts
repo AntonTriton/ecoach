@@ -5,4 +5,5 @@ export class Step {
     question : string;
     comment : string;
     comeback : string;
+    answer : string;
 }

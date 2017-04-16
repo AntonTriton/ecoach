@@ -3,6 +3,7 @@ import { Http, Response }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of'
 
 import { Step } from './step';
 
@@ -10,6 +11,7 @@ import { Step } from './step';
 export class DataService {
     currentStep: number;
     stepsLength: number;
+    allData: Step[];
     /*getData(): Promise<Hero[]> {
         return Promise.resolve(HEROES);
     }*/
@@ -21,23 +23,31 @@ export class DataService {
         this.stepsLength = 0;
     }
 
-    getData(stepNum: number): Observable<Step> {
-        console.log("getData", this.currentStep);
-        this.currentStep = stepNum
-        console.log("getData", this.currentStep);
-        return this.http.get(this.dataUrl)
-            .map(this.extractData.bind(this))
-            .catch(this.handleError);
+    getData(): Observable<Step[]> {
+        console.log("getData", this.currentStep, this.allData);
+        //this.currentStep = stepNum
+
+        if(this.allData && this.allData.length){
+
+          return Observable.of(this.allData);
+
+        }else{
+          return this.http.get(this.dataUrl)
+              .map(this.extractData.bind(this))
+              .catch(this.handleError);
+        }
     }
 
     private extractData(res: Response, stepNum: number) {
         let body = res.json();
+        this.allData = body.data;
         this.stepsLength = body.data.length;
-        return body.data[this.currentStep] || { };
+        //return body.data[this.currentStep] || { };
+        return body.data || { };
     }
 
-    public getStepsLength(){
-        return this.stepsLength;
+    public setAnswer(index: number, answer: string){
+        this.allData[index].answer = answer;
     }
 
     private handleError (error: Response | any) {
@@ -54,4 +64,3 @@ export class DataService {
         return Observable.throw(errMsg);
     }
 }
-

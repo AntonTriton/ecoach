@@ -16,6 +16,8 @@ import 'rxjs/add/operator/switchMap';
 export class AppStep {
     errorMessage: string;
     currentStepIndex: number;
+    stepsLength: number;
+    allSteps: Step[];
     step: Step;
     dataStep: Step;
 
@@ -33,37 +35,26 @@ export class AppStep {
 
         this.route.params
             .switchMap((params: Params) => {
-                console.log('params', params, params['stepNum']);
+                console.log('params--', params, params['stepNum']);
                 //this.dataService.getData(+params['id'])
 
                 this.currentStepIndex = +params['stepNum']
-                return this.dataService.getData(this.currentStepIndex)//
+                return this.dataService.getData()//
             })
             .subscribe((data) => {
-                this.step = data;
-                this.stepsLength = this.dataService.getStepsLength()
-                console.log('getData', this.step);//
+              console.log('subscribe', data);
+                this.allSteps = data;
+                this.stepsLength = this.allSteps.length;
+                this.step = this.allSteps[this.currentStepIndex]
             },
             error =>  this.errorMessage = <any>error);
 
-        //this.getData();
     }
-
-    /*getData(){
-        this.dataService.getData()
-            .subscribe(
-            (data) => {
-                this.data = data
-                console.log('getData', this.data);
-                this.step = this.data[this.currentStepIndex];
-            },
-                error =>  this.errorMessage = <any>error
-        );
-
-    }*/
 
     stepForward(){
         console.log('stepForward')
+        this.dataService.setAnswer(this.currentStepIndex, this.step.answer);
+
         if(this.currentStepIndex !== this.stepsLength-1) {
             this.currentStepIndex++
             this.router.navigate(['/step', this.currentStepIndex]);
