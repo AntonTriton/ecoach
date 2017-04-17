@@ -1,14 +1,16 @@
-<div class="part-head">
-    <!--<h2>{{ partHead.id  }}. {{ partHead.title }}</h2>
-    <p>{{ partHead.description }}</p>-->
+<div class="part-head" *ngIf="showPartIntro">
+    <h2>{{ part.id  }}. {{ part.title }}</h2>
+    <p>{{ part.description }}</p>
 
-    <!--<div class="nav">
-        <button type="button" class="btn btn-success pull-right" ng-click="stepForward()">Вперед</button>
-        <button type="button" class="btn btn-success btn-back" ng-click="stepBack()">Назад</button>
-    </div>-->
+    <div class="nav">
+        <button type="button" class="btn btn-success pull-right" (click)="stepForward()">
+          Вперед
+        </button>
+        <button type="button" class="btn btn-success btn-back" (click)="stepBack()">Назад</button>
+    </div>
 </div>
 
-<div class="coach-session row">
+<div class="coach-session row"  *ngIf="!showPartIntro">
     <div class="col-md-9">
         <div class="part-head-title">
             <h3>
@@ -30,8 +32,8 @@
 
         <div class="nav">
             <button type="button" class="btn btn-success pull-right" (click)="stepForward()">
-              <span *ngIf="currentStepIndex !== stepsLength-1">Вперед</span>
-              <span *ngIf="currentStepIndex === stepsLength-1">Закончить</span>
+              <span *ngIf="currentPartIndex !== partsLength-1 || currentStepIndex !== stepsLength-1">Вперед</span>
+              <span *ngIf="currentPartIndex === partsLength-1 && currentStepIndex === stepsLength-1">Закончить</span>
             </button>
             <button type="button" class="btn btn-success btn-back" (click)="stepBack()">Назад</button>
             <!--<button type="button" class="btn btn-success btn-back" ng-click="changeAnswer()">Изменить ответ</button>-->

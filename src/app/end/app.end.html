@@ -2,22 +2,27 @@
 
 <div class="coach-session row">
     <div class="col-md-12">
-      <div *ngFor="let step of allSteps">
+      <div *ngFor="let part of parts">
 
         <div class="part-head-title">
             <h3>
-                {{step.title}}
+                {{part.title}}
                 <!--{{ partHead.id +". "+ partHead.title }}-->
             </h3>
             <!--<span>(вопрос {{ stepNumber }} из {{ stepsSummary }})</span>-->
         </div>
-        <div class="question well">
-            {{ step.question }}
-        </div>
 
-        <div class="answer">
-          {{step.answer}}
-            <!-- <textarea class="form-control" name="" id="answer-text" cols="30" rows="10"></textarea> -->
+        <div *ngFor="let step of part.items">
+
+          <div class="question well">
+              {{ step.question }}
+          </div>
+
+          <div class="answer">
+            {{step.answer}}
+              <!-- <textarea class="form-control" name="" id="answer-text" cols="30" rows="10"></textarea> -->
+          </div>
+
         </div>
 
       </div>

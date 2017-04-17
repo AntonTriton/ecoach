@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { DataService } from '../step/data.service';
 
+import { Part } from '../step/part';
 import { Step } from '../step/step';
 
 import 'rxjs/add/operator/switchMap';
@@ -16,7 +17,7 @@ import 'rxjs/add/operator/switchMap';
 export class AppEnd {
     errorMessage: string;
     currentStepIndex: number;
-    allSteps: Step[];
+    parts: Part[];
 
     constructor (private dataService: DataService) {
 
@@ -27,7 +28,7 @@ export class AppEnd {
 
             this.dataService.getData().subscribe((data) => {
               console.log('subscribe', data);
-                this.allSteps = data;
+                this.parts = data;
                 //this.stepsLength = this.allSteps.length;
                 //this.step = this.allSteps[this.currentStepIndex]
             },

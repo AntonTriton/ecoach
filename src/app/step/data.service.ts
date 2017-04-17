@@ -5,13 +5,15 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of'
 
+import { Part } from './part';
 import { Step } from './step';
 
 @Injectable()
 export class DataService {
     currentStep: number;
     stepsLength: number;
-    allData: Step[];
+    //allData: Step[];
+    parts: Part[];
     /*getData(): Promise<Hero[]> {
         return Promise.resolve(HEROES);
     }*/
@@ -23,13 +25,13 @@ export class DataService {
         this.stepsLength = 0;
     }
 
-    getData(): Observable<Step[]> {
-        console.log("getData", this.currentStep, this.allData);
+    getData(): Observable<Part[]> {
+        console.log("getData", this.currentStep, this.parts);
         //this.currentStep = stepNum
 
-        if(this.allData && this.allData.length){
+        if(this.parts && this.parts.length){
 
-          return Observable.of(this.allData);
+          return Observable.of(this.parts);
 
         }else{
           return this.http.get(this.dataUrl)
@@ -40,14 +42,14 @@ export class DataService {
 
     private extractData(res: Response, stepNum: number) {
         let body = res.json();
-        this.allData = body.data;
+        this.parts = body.data;
         this.stepsLength = body.data.length;
         //return body.data[this.currentStep] || { };
         return body.data || { };
     }
 
-    public setAnswer(index: number, answer: string){
-        this.allData[index].answer = answer;
+    public setAnswer(partIndex: number, stepIndex: number, answer: string){
+        this.parts[partIndex].items[stepIndex].answer = answer;
     }
 
     private handleError (error: Response | any) {
