@@ -7,12 +7,13 @@ import 'rxjs/add/observable/of'
 
 import { Part } from './part';
 import { Step } from './step';
+import { AllData } from './allData';
 
 @Injectable()
 export class DataService {
     currentStep: number;
     stepsLength: number;
-    //allData: Step[];
+    allData: AllData;
     parts: Part[];
     /*getData(): Promise<Hero[]> {
         return Promise.resolve(HEROES);
@@ -25,13 +26,13 @@ export class DataService {
         this.stepsLength = 0;
     }
 
-    getData(): Observable<Part[]> {
+    getData(): Observable<AllData> {
         console.log("getData", this.currentStep, this.parts);
         //this.currentStep = stepNum
 
-        if(this.parts && this.parts.length){
+        if(this.allData){
 
-          return Observable.of(this.parts);
+          return Observable.of(this.allData);
 
         }else{
           return this.http.get(this.dataUrl)
@@ -42,8 +43,8 @@ export class DataService {
 
     private extractData(res: Response, stepNum: number) {
         let body = res.json();
-        this.parts = body.data;
-        this.stepsLength = body.data.length;
+        this.allData = body.data;
+        //this.stepsLength = body.data.length;
         //return body.data[this.currentStep] || { };
         return body.data || { };
     }

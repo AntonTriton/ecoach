@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppStart } from './start/app.start';
 import { AppStep} from './step/app.step';
 import { AppEnd} from './end/app.end';
+//import { AppIntro} from './intro/app.intro';
 
 //
 //
@@ -15,6 +16,8 @@ import { DataService } from './step/data.service';
 
 const appRoutes: Routes = [
     { path: 'start', component: AppStart },
+    { path: 'part/:partNum/intro', component: AppStep },
+    { path: 'part/:partNum/step/:stepNum', component: AppStep },
     { path: 'step/:stepNum', component: AppStep },
     { path: 'end', component: AppEnd },
     /*{ path: 'hero/:id',      component: HeroDetailComponent },

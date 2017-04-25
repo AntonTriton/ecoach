@@ -21,6 +21,7 @@ export class AppStep {
     partsLength: number;
     stepsLength: number;
     stepNum: number;
+    partNum: number;
     showPartIntro: boolean;
     parts: Part[];
     allSteps: Step[];
@@ -45,94 +46,83 @@ export class AppStep {
                 console.log('params--', params, params['stepNum']);
                 //this.dataService.getData(+params['id'])
 
-                this.stepNum = +params['stepNum']
+                this.currentStepIndex = params['stepNum'] ? +params['stepNum'] : undefined;
+                this.currentPartIndex = +params['partNum']
                 return this.dataService.getData()
             })
             .subscribe((data) => {
-                this.parts = data;
-                [this.currentStepIndex, this.currentPartIndex] = this.getIndexesByUrlParam(this.stepNum)
-                this.partsLength = this.parts.length;
-                this.part = this.parts[this.currentPartIndex];
-                this.step = this.part.items[this.currentStepIndex];
-                this.stepsLength = this.part.items.length;
 
-                  console.log('subscribe', data, this.currentStepIndex, this.currentPartIndex);
+                if(data.hasParts){
+                  this.parts = data.parts;
+                  //[this.currentStepIndex, this.currentPartIndex] = this.getIndexesByUrlParam(this.partNum, this.stepNum)
+                  this.partsLength = this.parts.length;
+                  this.part = this.parts[this.currentPartIndex];
+                  this.step = this.part.items[this.currentStepIndex];
+                  this.stepsLength = this.part.items.length;
 
-                if(this.currentStepIndex === 0) this.showPartIntro = true;
+                  console.log('subscribe', data, this.currentStepIndex, this.currentPartIndex, this.stepsLength);
+                }
+
+                if(this.currentStepIndex === undefined){
+                  this.showPartIntro = true;
+                }else{
+                  this.showPartIntro = false;
+                }
+
             },
             error =>  this.errorMessage = <any>error);
 
     }
 
     stepForward(){
-        console.log('stepForward', this.currentStepIndex, this.currentPartIndex)
-        this.dataService.setAnswer(this.currentPartIndex, this.currentStepIndex, this.step.answer);
 
-        if(this.currentStepIndex === 0 && this.showPartIntro === null){
+      console.log('stepForward', this.currentPartIndex, this.currentStepIndex )
 
-          console.log('stepForward-0')
+      if(this.currentPartIndex === this.partsLength - 1 && this.currentStepIndex === this.stepsLength - 1){
+          console.log('stepForward 1', this.currentPartIndex, this.currentStepIndex);
+          this.router.navigate(['/end']);
+      }else if(this.currentStepIndex === this.stepsLength - 1){
+        console.log('stepForward 2', this.currentPartIndex, this.currentStepIndex);
+          this.currentPartIndex++
+          this.router.navigate(['/part/'+this.currentPartIndex+'/intro']);
+      }else{
+        console.log('stepForward 3', this.currentPartIndex, this.currentStepIndex);
+          this.currentStepIndex !== undefined ?
+            this.currentStepIndex++ :
+            this.currentStepIndex = 0;
 
-            this.showPartIntro = true;
-
-        }else if(this.currentStepIndex === 0 && this.showPartIntro === true){
-
-            console.log('stepForward-1')
-
-            this.showPartIntro = false;
-
-        }else {
-
-          console.log('stepForward-2', this.currentStepIndex, this.currentPartIndex, this.partsLength)
-          this.showPartIntro = null
-
-          if(this.currentPartIndex === this.partsLength-1 && this.currentStepIndex === this.stepsLength-1) {
-              console.log('stepForward-4')
-              // show end page
-              this.router.navigate(['end']);
-
-            }else{
-              console.log('stepForward-3', this.currentStepIndex)
-                  //this.router.navigate(['/step', this.currentStepIndex]);
-                  this.currentStepIndex++;
-                  this.router.navigate(['/step', this.getStepIdByPartAndStepIndex()]);
-            }
-        }
+          this.router.navigate(['part/'+this.currentPartIndex+'/step/'+this.currentStepIndex]);
+      }
 
     }
 
     stepBack(){
-        if(this.currentStepIndex !== 0) {
-            this.currentStepIndex--
-            //this.step = this.data[this.currentStepIndex];
-            this.router.navigate(['/step', this.getStepIdByPartAndStepIndex()]);
-        }
-    }
 
-    getIndexesByUrlParam(stepId: number){
-      let currentPartIndex, currentStepIndex;
+      if(this.currentPartIndex === 0 && this.currentStepIndex === undefined){
+          console.log('stepBack 1', this.currentPartIndex, this.currentStepIndex);
+          this.router.navigate(['/start']);
+      }else if(this.currentStepIndex === undefined){
+          console.log('stepBack 1', this.currentPartIndex, this.currentStepIndex);
 
-      console.log('getIndexesByUrlParam', stepId)
+          this.currentPartIndex ?
+            this.currentPartIndex-- :
+            this.currentPartIndex = 0;
 
-      this.parts.forEach(function(part,partIndex,partsArr){
+          this.currentStepIndex = this.parts[this.currentPartIndex].items.length - 1
 
-        part.items.forEach(function(item, itemIndex, itemsArr){
-          if(item.id === stepId){
-            currentStepIndex = itemIndex;
-            currentPartIndex = partIndex;
-          }
-        })
-      })
+          this.router.navigate(['part/'+this.currentPartIndex+'/step/'+this.currentStepIndex]);
+      }else if(this.currentStepIndex === 0){
+          console.log('stepBack 2', this.currentPartIndex, this.currentStepIndex);
+          this.router.navigate(['/part/'+this.currentPartIndex+'/intro']);
+      }else{
+          console.log('stepBack 3', this.currentPartIndex, this.currentStepIndex);
+          this.currentStepIndex !== undefined ?
+            this.currentStepIndex-- :
+            this.currentStepIndex = 0;
 
-      return [currentStepIndex, currentPartIndex]
-    }
-
-    getStepIdByPartAndStepIndex(){
-      console.log('getStepIdByPartAndStepIndex', this.currentPartIndex, this.currentStepIndex);
-      if(this.currentStepIndex == this.stepsLength){
-        this.currentPartIndex++;
-        this.currentStepIndex = 0
+          this.router.navigate(['part/'+this.currentPartIndex+'/step/'+this.currentStepIndex]);
       }
-      return this.parts[this.currentPartIndex].items[this.currentStepIndex].id
-    }
+
+      }
 
 }

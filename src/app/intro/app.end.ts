@@ -28,7 +28,7 @@ export class AppEnd {
 
             this.dataService.getData().subscribe((data) => {
               console.log('subscribe', data);
-                this.parts = data.parts;
+                this.parts = data;
                 //this.stepsLength = this.allSteps.length;
                 //this.step = this.allSteps[this.currentStepIndex]
             },
