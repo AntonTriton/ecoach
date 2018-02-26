@@ -1,0 +1,24 @@
+
+<form class="form form-auth" (ngSubmit)="onSubmit()">
+    <span class="icon icon-close float-right" (click)="reject()">x</span>
+
+    <h2 class="form-signin-heading">Регистрация</h2>
+
+    <div class="form-group">
+      <input class="form-control" type="text" name="name" value="" placeholder="логин" [(ngModel)]="regModel.username">
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="email" name="name" value="" placeholder="email" [(ngModel)]="regModel.email">
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="password" name="password" value="" placeholder="пароль" [(ngModel)]="regModel.password">
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="password" name="password2" value="" placeholder="повторить пароль" [(ngModel)]="regModel.password2">
+    </div>
+
+    <button class="btn btn-success btn-auth" type="submit">Зарегистрироваться</button>
+</form>

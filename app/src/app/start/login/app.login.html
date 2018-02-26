@@ -1,0 +1,16 @@
+
+<form class="form form-auth" (ngSubmit)="onSubmit()">
+    <span class="icon icon-close float-right" (click)="reject()">x</span>
+
+    <h2 class="form-signin-heading">Вход</h2>
+
+    <div class="form-group">
+      <input type="text" name="username" class="form-control" value="" placeholder="логин" [(ngModel)]="loginModel.username">
+    </div>
+
+    <div class="form-group">
+      <input type="text" name="password" class="form-control" value="" placeholder="пароль" [(ngModel)]="loginModel.password">
+    </div>
+
+    <button class="btn btn-success btn-auth" type="submit">Войти</button>
+</form>

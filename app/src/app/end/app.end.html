@@ -1,0 +1,36 @@
+
+
+<div class="coach-session row">
+    <div class="col-md-12">
+      <div *ngFor="let part of parts">
+
+        <div class="part-head-title">
+            <h3>
+                {{part.title}}
+                <!--{{ partHead.id +". "+ partHead.title }}-->
+            </h3>
+            <!--<span>(вопрос {{ stepNumber }} из {{ stepsSummary }})</span>-->
+        </div>
+
+        <div *ngFor="let step of part.items">
+
+          <div class="question well">
+              {{ step.question }}
+          </div>
+
+          <div class="answer">
+            {{step.answer}}
+              <!-- <textarea class="form-control" name="" id="answer-text" cols="30" rows="10"></textarea> -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+        <a [routerLink]="['/start']" class="btn btn-default">На главную</a>
+        <button type="button" class="btn btn-default">Сохранить</button>
+      </div>
+
+    </div>
+</div>

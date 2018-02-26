@@ -1,0 +1,21 @@
+
+.hello-page{
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.hello-auth{
+  padding: 5px 10px 0 0
+}
+
+.hello-auth a{
+    margin: 0 5px;
+    color: green;
+    border-bottom: 1px solid transparent;
+}
+
+.hello-auth a:hover{
+    text-decoration: none;
+    border-bottom: 1px solid green;
+}
